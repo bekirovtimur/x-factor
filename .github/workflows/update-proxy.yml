@@ -25,6 +25,6 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add proxy.conf
-        git diff --staged --quiet || git commit -m "Auto-update proxy config $(date)"
+        git add *.conf
+        git diff --staged --quiet || git commit -m "Auto-update proxy configs $(date)"
         git push
