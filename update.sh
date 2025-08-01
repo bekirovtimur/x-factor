@@ -1,23 +1,49 @@
 #!/bin/bash
-set -e
 
-SOURCE="https://raw.githubusercontent.com/4n0nymou3/multi-proxy-config-fetcher/refs/heads/main/configs/proxy_configs.txt"
-NAME="𝕏-Factor"
-RESULTFILE=proxy.conf
-TITLE=$(echo -n "${NAME}" | base64)
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-if ! curl -s --head "$SOURCE" | head -n 1 | grep -q "HTTP/2 200"; then
-    echo "Error: Source is not available"
+echo "Starting update process from: $PROJECT_ROOT"
+echo "Looking for scripts in: $PROJECT_ROOT/scripts"
+
+if [ ! -d "$PROJECT_ROOT/scripts" ]; then
+    echo "Error: scripts directory not found at $PROJECT_ROOT/scripts"
     exit 1
 fi
 
-echo -n > $RESULTFILE
-echo "//profile-title: base64:${TITLE}" >> $RESULTFILE
-echo "//profile-update-interval: 1" >> $RESULTFILE
-echo "//subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531" >> $RESULTFILE
-echo "//support-url: https://t.me/gdnavigator" >> $RESULTFILE
-echo "//profile-web-page-url: https://github.com/bekirovtimur" >> $RESULTFILE
-curl -s $SOURCE | \
-grep -v '^ss://' | \
-grep -v '^//' | \
-grep -v '^$' >> $RESULTFILE
+executed_count=0
+failed_count=0
+
+script_files=$(find "$PROJECT_ROOT/scripts" -name "*.sh" -type f | sort)
+
+for script_file in $script_files; do
+    relative_path="${script_file#$PROJECT_ROOT/}"
+    
+    echo "----------------------------------------"
+    echo "Executing: $relative_path"
+    echo "----------------------------------------"
+    
+    if [ ! -x "$script_file" ]; then
+        echo "Making $relative_path executable..."
+        chmod +x "$script_file"
+    fi
+    
+    if (cd "$PROJECT_ROOT" && "$script_file"); then
+        echo "✅ Successfully executed: $relative_path"
+        ((executed_count++))
+    else
+        echo "❌ Failed to execute: $relative_path"
+        ((failed_count++))
+    fi
+    
+    echo ""
+done
+
+echo "========================================"
+echo "Update process completed!"
+echo "Successfully executed: $executed_count scripts"
+echo "Failed: $failed_count scripts"
+echo "========================================"
+
+if [ $failed_count -gt 0 ]; then
+    exit 1
+fi
