@@ -1,8 +1,16 @@
 #!/bin/bash
+set -e
+
 SOURCE="https://raw.githubusercontent.com/4n0nymou3/multi-proxy-config-fetcher/refs/heads/main/configs/proxy_configs.txt"
 NAME="𝕏-Factor"
 RESULTFILE=proxy.conf
 TITLE=$(echo -n "${NAME}" | base64)
+
+if ! curl -s --head "$SOURCE" | head -n 1 | grep -q "HTTP/2 200"; then
+    echo "Error: Source is not available"
+    exit 1
+fi
+
 echo -n > $RESULTFILE
 echo "//profile-title: base64:${TITLE}" >> $RESULTFILE
 echo "//profile-update-interval: 1" >> $RESULTFILE

@@ -1,0 +1,27 @@
+name: Update Proxy Config
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Run update script
+      run: |
+        chmod +x update.sh
+        ./update.sh
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add proxy.conf
+        git diff --staged --quiet || git commit -m "Auto-update proxy config $(date)"
+        git push
