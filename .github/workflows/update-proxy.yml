@@ -15,8 +15,9 @@ jobs:
       
     - name: Run update script
       env:
-        SOURCE_UNO: ${{ secrets.SOURCE_UNO }}
         SOURCE_X: ${{ secrets.SOURCE_X }}
+        SOURCE_UNO: ${{ secrets.SOURCE_UNO }}
+        SOURCE_DOS: ${{ secrets.SOURCE_DOS }}
       run: |
         chmod +x update.sh
         ./update.sh
