@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+SOURCE_TRES="${SOURCE_TRES}"
+NAME="3️⃣ Tres"
+RESULTFILE=tres.conf
+TITLE=$(echo -n "${NAME}" | base64)
+
+if ! curl -s --head "$SOURCE_TRES" | head -n 1 | grep -q "HTTP/2 200"; then
+    echo "Error: Source is not available"
+    exit 1
+fi
+
+echo -n > $RESULTFILE
+echo "//profile-title: base64:${TITLE}" >> $RESULTFILE
+echo "//profile-update-interval: 1" >> $RESULTFILE
+echo "//subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531" >> $RESULTFILE
+echo "//support-url: https://t.me/gdnavigator" >> $RESULTFILE
+echo "//profile-web-page-url: https://github.com/bekirovtimur" >> $RESULTFILE
+curl -s $SOURCE_TRES | \
+grep -v '^ss://' | \
+grep -v '^vmess://' | \
+grep -v '^//' | \
+grep -v '^$' | \
+sed 's/\[[^]]*\] */tres-server-/g' >> $RESULTFILE
