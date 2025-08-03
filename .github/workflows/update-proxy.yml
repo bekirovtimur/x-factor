@@ -2,7 +2,7 @@ name: Update Configs
 
 on:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '10 1 * * *'
   workflow_dispatch:
 
 jobs:
