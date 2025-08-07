@@ -14,16 +14,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y petname
+
     - name: Run update script
       env:
         SOURCE_X: ${{ secrets.SOURCE_X }}
         SOURCE_UNO: ${{ secrets.SOURCE_UNO }}
         SOURCE_DOS: ${{ secrets.SOURCE_DOS }}
         SOURCE_TRES: ${{ secrets.SOURCE_TRES }}
+        SOURCE_COLLECTOR: ${{ secrets.SOURCE_COLLECTOR }}
       run: |
         chmod +x update.sh
         ./update.sh
-        
+
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
