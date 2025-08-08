@@ -2,10 +2,10 @@
 # set -e
 SOURCE_TRES="${SOURCE_TRES}"
 SOURCE_COLLECTOR="${SOURCE_COLLECTOR}"
-NAME="🇰🇿 Kazakhstan"
-COUNTRY_CODE="KZ"
-COUNTRY_FLAG="🇰🇿"
-RESULTFILE=KZ.conf
+NAME="🇺🇸 United States of America"
+COUNTRY_CODE="US"
+COUNTRY_FLAG="🇺🇸"
+RESULTFILE=US.conf
 TITLE=$(echo -n "${NAME}" | base64)
 
 sources=("$SOURCE_TRES" "$SOURCE_COLLECTOR")
