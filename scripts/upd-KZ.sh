@@ -145,6 +145,9 @@ while IFS= read -r line; do
         continue
     fi
     
+    # Добавляем задержку между запросами к ip-api.com (лимит: 45 запросов/минуту)
+    sleep 1.4
+
     # Генерируем имя сервера
     server_name=$(generate_server_name "$ip_info")
     
