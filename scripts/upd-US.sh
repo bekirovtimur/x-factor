@@ -99,7 +99,7 @@ echo -n > $RESULTFILE
 echo "//profile-title: base64:${TITLE}" >> $RESULTFILE
 echo "//profile-update-interval: 1" >> $RESULTFILE
 echo "//subscription-userinfo: upload=0; download=0; total=10737418240000000; expire=2546249531" >> $RESULTFILE
-echo "//support-url: https://t.me/gdnavigator" >> $RESULTFILE
+echo "//support-url: https://github.com/bekirovtimur/x-factor/issues" >> $RESULTFILE
 echo "//profile-web-page-url: https://github.com/bekirovtimur" >> $RESULTFILE
 
 echo -n > all_sources.tmp

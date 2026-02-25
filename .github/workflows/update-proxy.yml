@@ -26,6 +26,7 @@ jobs:
         SOURCE_DOS: ${{ secrets.SOURCE_DOS }}
         SOURCE_TRES: ${{ secrets.SOURCE_TRES }}
         SOURCE_COLLECTOR: ${{ secrets.SOURCE_COLLECTOR }}
+        SOURCE_HY2: ${{ secrets.SOURCE_HY2 }}
       run: |
         chmod +x update.sh
         ./update.sh
